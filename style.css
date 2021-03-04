@@ -12,26 +12,32 @@ td, th {
     border-collapse: collapse;
     border: 1px solid darkgray;
 }
-tr.in1 th, .demo1 {
+tr.in1 th, .k1 {
     background: rgba(255, 0, 0, 0.3)
 }
 
-tr.in2 th, .demo2 {
+tr.in2 th, .k2 {
     background: rgba(255, 180, 0, 0.5)
 }
 
-tr.in3 th, .demo3 {
+tr.in3 th, .k3 {
     background: rgba(0, 200, 0, 0.25)
 }
-
+.k1, .k2, .k3 {
+	width: "30%";
+}
 tr:nth-child(odd) {
     background-color: #f0f0f0;
 }
-
-.present-no {
+.absent {
     color: red;
 }
-
 .key {
     font-size: 75%;
+}
+.egg {
+	margin-top: 80px;
+	font-size: 60%;
+	opacity: 33%;
+
 }
