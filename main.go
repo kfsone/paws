@@ -19,12 +19,26 @@ import (
 
 var empowerment = []string{
 	"a box of cats",
+	"a box of cats",
+	"a box of rats",
+	"a box of hamsters",
+	"a box of puppies",
+	"a box of puppies",
+	"puppies",
+	"puppies",
+	"dogs dreaming of walkies",
+	"a box of mice",
+	"a box of meeces",
+	"a box of mouses",
+	"a box",
+	"birthday presents",
 	"caffeine",
 	"Yorkshire tea",
 	"Meg's fury",
 	"guineapoop",
 	"a vision of a world where no bark is left unwoofed",
 	"31 guineapigs and counting",
+	"your passion",
 	"your passion",
 	"electricity",
 	"power",
@@ -34,11 +48,14 @@ var empowerment = []string{
 	"candy",
 	"the promise that, tomorrow, there will be candy...",
 	"walkies",
+	"walkies",
+	"treats",
 	"treats",
 	"kibble",
+	"_________ __ _____ _______!",
 	"the mysteries of science, especially that one about the lead balloon...",
-	"mystical energies that cannot be understood with the mind alone, only by seeing beyond the veil and reaching into infinity to discover the pervasive energy that binds and connects us all. The force. I'm talking about the force. I'm a nerd. I wrote a footer on a webpage. Of course I'm a nerd.",
-	"breakfast(**).\n\n\n\n\n\n\n\n<small>** It really <i> the most important meal of the day.</small>"
+	"mystical energies that cannot be understood with the mind alone, only by seeing beyond the veil and reaching into infinity to discover the pervasive energy that binds and connects us all...\n\n\n\nThe force. I'm talking about the force. I'm a nerd. I wrote a footer on a webpage. Of course I'm a nerd.",
+	"breakfast(**).\n\n\n\n\n\n\n\n<small>** It really <i> the most important meal of the day.</small>",
 }
 
 type Finder func([]byte) map[string]string
@@ -49,11 +66,6 @@ type Crawl struct {
 	Headers map[string]string
 	Finder  Finder
 	Animals map[string]string
-}
-
-type AnimalInfo struct {
-	Id string
-	Sites map[string]string
 }
 
 func (c *Crawl) Url() string { return c.Site + c.Page }
@@ -154,6 +166,7 @@ func shorten(sitename string) string {
 }
 
 func runCrawl(w io.Writer) {
+	generated := time.Now().Format("Mon 2006/01/02 15:04:05")
 	var 	crawls = []*Crawl{
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=0", nil, newRegexFinder(seacaaRex)),
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=1", nil, newRegexFinder(seacaaRex)),
@@ -210,21 +223,33 @@ func runCrawl(w io.Writer) {
 
 	// pets by id followed by siteNames-ordered list of hit/miss
 	type AnimalInfo struct {
+		Id string
 		Links []string
 		PresenceCount int
 	}
-	pets := make(map[string]AnimalInfo)
+	pets := make([]AnimalInfo, 0, len(petSites))
 	for id, petLinks := range petSites {
-		info := AnimalInfo{Links: make([]string, len(siteNames))}
+		info := AnimalInfo{Id: id, Links: make([]string, len(siteNames))}
 		for idx, site := range siteNames {
 			info.Links[idx] = petLinks[site]
 			if info.Links[idx] != "" {
 				info.PresenceCount++
 			}
 		}
-		pets[id] = info
+		pets = append(pets, info)
 	}
+	sort.Slice(pets, func (l, r int) bool {
+		switch {
+		case pets[l].PresenceCount < pets[r].PresenceCount:
+			return true
+		case pets[l].PresenceCount == pets[r].PresenceCount:
+			return pets[l].Id < pets[r].Id
+		default:
+			return false
+		}
+	})
 
+	// Choose a random "powered" message
 	rand.Shuffle(len(empowerment), func (l, r int) { empowerment[l], empowerment[r] = empowerment[r], empowerment[l] })
 
 	tpl, err := ioutil.ReadFile("template.gohtml")
@@ -235,10 +260,10 @@ func runCrawl(w io.Writer) {
 	err = pageTemplate.Execute(w, &struct{
 		Generated string
 		Sites []string
-		Pets map[string]AnimalInfo
+		Pets []AnimalInfo
 		PoweredBy string
 	} {
-		Generated: time.Now().Format("Mon 2006/01/02 15:04:05"),
+		Generated: generated,
 		Sites: siteNames,
 		Pets: pets,
 		PoweredBy: empowerment[0],

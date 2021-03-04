@@ -12,9 +12,9 @@
         <th> ID </th>
         {{- range .Sites }}<th>{{.}}</th>{{ end -}}
     </tr>
-    {{- range $animal, $info := .Pets}}
+    {{- range $info := .Pets}}
         <tr class="in{{$info.PresenceCount}}">
-            <th>{{$animal}}</th>
+            <th>{{$info.Id}}</th>
             {{- range $link := $info.Links -}}
             <td class="{{if $link -}}present{{else}}absent{{end}}">
                 {{- if $link -}}
