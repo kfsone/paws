@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Pet lookup </title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="listings">
+<p>Pet list ({{.Generated}})</p>
+<table>
+    <tr>
+        <th> ID </th>
+        {{ range .Sites }}<th>{{.}}</th>{{ end }}
+    </tr>
+    {{range $animal, $info := .Pets}}
+        <tr class="in{{$info.PresenceCount}}">
+            <th>{{$animal}}</th>
+            {{range $link := $info.Links}}
+            <td class="{{if $link -}}present-yes{{else}}present-no{{end}}">
+                {{if $link -}}
+                    <a href="{{$link}}" target="_blank">Present</a>
+                {{- else -}}
+                    X
+                {{- end}}
+            </td>
+            {{end}}
+        </tr>
+    {{end}}
+</table>
+    <p/>
+<table class="key">
+    <tr><th colspan="3">Key:</th> </tr>
+    <tr><th class="demo1" width="30%">On one site</th><th class="demo2" width="30%">On two sites</th><th class="demo3" width="30%">On all</th></tr>
+</table>
+</div>
+</body>
+</html>

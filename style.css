@@ -1,0 +1,37 @@
+.listings {
+    text-align: center;
+    font-family: Lucida Sans;
+}
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    border: 1px solid darkgray;
+}
+td, th {
+    border-collapse: collapse;
+    border: 1px solid darkgray;
+}
+tr.in1 th, .demo1 {
+    background: rgba(255, 0, 0, 0.3)
+}
+
+tr.in2 th, .demo2 {
+    background: rgba(255, 180, 0, 0.5)
+}
+
+tr.in3 th, .demo3 {
+    background: rgba(0, 200, 0, 0.25)
+}
+
+tr:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+
+.present-no {
+    color: red;
+}
+
+.key {
+    font-size: 75%;
+}
