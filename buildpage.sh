@@ -20,14 +20,5 @@ make -q
 
 # if we suceeded, copy the file.
 if $success; then
-	sftp -b - \
-		 -q >/dev/null \
-		 -i "${SSH_ID}" \
-		 "${SSH_USER}@${SSH_HOST}:${HTML_PATH}" \
-		 <<END
-put index.html index.html.new
-put style.css style.css.new
-rename index.html.new index.html
-rename style.css.new style.css
-END
+	/home/oliver/bin/sfput.py index.html style.css
 fi
