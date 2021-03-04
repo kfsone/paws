@@ -33,6 +33,11 @@ var empowerment = []string{
 	"... the dark side of the sun. Deep, huh?",
 	"candy",
 	"the promise that, tomorrow, there will be candy...",
+	"walkies",
+	"treats",
+	"kibble",
+	"the mysteries of science, especially that one about the lead balloon...",
+	"mystical energies that cannot be understood with the mind alone, only by seeing beyond the veil and reaching into infinity to discover the pervasive energy that binds and connects us all. The force. I'm talking about the force. I'm a nerd. I wrote a footer on a webpage. Of course I'm a nerd.",
 }
 
 type Finder func([]byte) map[string]string
