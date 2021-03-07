@@ -34,7 +34,7 @@
 </table>
 <p/>
 <div>
-	<a href="mailto:oliver@kfs.org?subject=Paws">Feedback?</a> | <a href="main.go">Source</a> | <a href="template.gohtml" type="text/plain">HTML Template</a>
+	<a href="mailto:oliver@kfs.org?subject=Paws">Feedback?</a> | <a href="main.go">Source</a> | <a href="template.txt">HTML Template</a>
 </div>
 <p/>
 <div class='egg'>* Powered by {{.PoweredBy}}</div>
