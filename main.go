@@ -40,7 +40,7 @@ type Crawl struct {
 	Animals map[string]string
 }
 
-// Lazy regular expressions ot find the IDs for seaca and adoptapet
+// Lazy regular expressions to find the IDs for seaca and adoptapet
 
 var seaacaRex = regexp.MustCompile(`"(/adoptions/view-our-animals?[^"]*pet_id=(\d{2,}-\d{5,}))"`)
 var adoptaRex = regexp.MustCompile(`href="([^"]+)"[^>]*>.*?<\w+ class="[^"]*periodic-base[^"]*"[^>]*>\s*(\d{2,}-\d{5,})\s*<`)
