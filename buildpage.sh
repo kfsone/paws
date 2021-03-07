@@ -20,5 +20,5 @@ make -q
 
 # if we suceeded, copy the file.
 if $success; then
-	/home/oliver/bin/sfput.py index.html style.css
+	/home/oliver/bin/sfput.py main.go template.txt index.html style.css
 fi
