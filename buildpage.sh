@@ -16,9 +16,9 @@ success=/bin/false
 
 # prep the directory
 make -q
-./petids >./index.html && success=/bin/true
+./paws >./index.html && success=/bin/true
 
 # if we suceeded, copy the file.
-if $success; then
-	/home/oliver/bin/sfput.py main.go template.txt index.html style.css
-fi
+#if $success; then
+#	/home/oliver/bin/sfput.py main.go template.txt index.html style.css
+#fi

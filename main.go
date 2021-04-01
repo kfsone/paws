@@ -160,6 +160,7 @@ func runCrawl(w io.Writer) {
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=0", nil, newRegexFinder(seaacaRex)),
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=1", nil, newRegexFinder(seaacaRex)),
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=2", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=3", nil, newRegexFinder(seaacaRex)),
 		NewCrawl("https://www.adoptapet.com", "/adoption_rescue/73843-seaaca-southeast-area-animal-control-authority-downey-california", nil, newRegexFinder(adoptaRex)),
 		NewCrawl("https://www.petfinder.com", "/search/?page=1&limit[]=40&status=adoptable&distance[]=Anywhere&sort[]=recently_added&shelter_id[]=CA990&include_transportable=true", petfinderHeaders, petFinder),
 	}
