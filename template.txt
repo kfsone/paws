@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Pet Listing @ {{.Generated}}</title>
-    <link rel="stylesheet" href="style.css" />
+<title> Pet Listing @ {{.Generated}} MST</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <div class="listings">
-<p>Pet Listing @ {{.Generated}}</p>
+<p>Pet Listing @ {{.Generated}} <b>MST</b></p>
 <table>
-    <tr>
-        <th> ID </th>
-        {{- range .Sites }}<th>{{.}}</th>{{ end -}}
-    </tr>
-    {{- range $info := .Pets}}
-        <tr class="in{{$info.PresenceCount}}">
-            <th>{{$info.Id}}</th>
-            {{- range $link := $info.Links -}}
-            <td class="{{if $link -}}present{{else}}absent{{end}}">
-                {{- if $link -}}
-                    <a href="{{$link}}" target="_blank">Present</a>
-                {{- else -}}
-                    X
-                {{- end -}}
-            </td>
-            {{- end -}}
-        </tr>
-    {{end -}}
+	<tr>
+		<th> ID </th>
+		{{- range .Sites }}<th>{{.}}</th>{{ end -}}
+	</tr>
+	{{- range $info := .Pets -}}
+		<tr class="in{{$info.PresenceCount}}">
+			<th>{{$info.Id}}</th>
+			{{- range $link := $info.Links -}}
+			<td class="{{if $link -}}present{{else}}absent{{end}}">
+				{{- if $link -}}
+					<a href="{{$link}}" target="_blank">Present</a>
+				{{- else -}}
+					X
+				{{- end -}}
+			</td>
+			{{- end -}}
+		</tr>
+	{{- end -}}
 </table>
-    <p/>
+	<p/>
 <table class="key">
-    <tr><th colspan="3">Key:</th> </tr>
-    <tr><th class="k1">On one site</th><th class="k2">On two sites</th><th class="k3">On all</th></tr>
+	<tr><th colspan="3">Key:</th> </tr>
+	<tr><th class="k1">On one site</th><th class="k2">On two sites</th><th class="k3">On all</th></tr>
 </table>
 <p/>
 <div>
