@@ -2,6 +2,9 @@
     text-align: center;
     font-family: Lucida Sans;
 }
+#crawls {
+    font-size: small;
+}
 table {
     margin-left: auto;
     margin-right: auto;

@@ -37,12 +37,13 @@
 	<a href="mailto:oliver@kfs.org?subject=Paws">Feedback?</a> | <a href="main.go">Source</a> | <a href="template.txt">HTML Template</a>
 </div>
 <p/>
-<div class='egg'>* Powered by {{.PoweredBy}}</div>
 <table class='crawls'>
 <tr><th>URLs I crawled to build this data:</th></tr>
 {{- range $from := $.Crawled -}}
 <tr><td><a href='{{$from}}'>{{$from}}</a></td></tr>
 {{- end -}}
 </table>
+<p/>
+<div class='egg'>* Powered by {{.PoweredBy}}</div>
 </body>
 </html>
