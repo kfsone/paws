@@ -29,13 +29,13 @@ type Finder func([]byte) AnimalMap
 // Crawl represents a url to be crawled and the animals found from doing so.
 type Crawl struct {
 	// Site is the uri for accessing the top of the site, e.g. http://foo.com
-	Site    string
+	Site string
 	// Page is the uri for the page to crawl, excluding the site name. e.g "pets/index.html"
-	Page    string
+	Page string
 	// Headers is an optional table of additional headers to send when making the web request.
 	Headers map[string]string
 	// Finder is the function to translate pages into petid tables.
-	Finder  Finder
+	Finder Finder
 	// Animals will be the pet id table returned by Finder.
 	Animals map[string]string
 }
@@ -147,7 +147,7 @@ func petFinder(body []byte) AnimalMap {
 // shorten is a quick helper to reduce a full sitename down to a prettified link.
 func shorten(sitename string) string {
 	l := strings.Index(sitename, ":/") + 3
-	return `<a href="`+sitename+`" target="_blank">` + sitename[l:] + `</a>`
+	return `<a href="` + sitename + `" target="_blank">` + sitename[l:] + `</a>`
 }
 
 // entry point to run all the calls and aggregate the information.
@@ -161,8 +161,19 @@ func runCrawl(w io.Writer) {
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=1", nil, newRegexFinder(seaacaRex)),
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=2", nil, newRegexFinder(seaacaRex)),
 		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=3", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=4", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=5", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=6", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=7", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=8", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=9", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=10", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=11", nil, newRegexFinder(seaacaRex)),
+		NewCrawl("https://www.seaaca.org", "/adoptions/view-our-animals/?&page=12", nil, newRegexFinder(seaacaRex)),
 		NewCrawl("https://www.adoptapet.com", "/adoption_rescue/73843-seaaca-southeast-area-animal-control-authority-downey-california", nil, newRegexFinder(adoptaRex)),
-		NewCrawl("https://www.petfinder.com", "/search/?page=1&limit[]=40&status=adoptable&distance[]=Anywhere&sort[]=recently_added&shelter_id[]=CA990&include_transportable=true", petfinderHeaders, petFinder),
+		NewCrawl("https://www.adoptapet.com", "/adoption_rescue/73843-seaaca-southeast-area-animal-control-authority-downey-california?page=2", nil, newRegexFinder(adoptaRex)),
+		NewCrawl("https://www.adoptapet.com", "/adoption_rescue/73843-seaaca-southeast-area-animal-control-authority-downey-california?page=3", nil, newRegexFinder(adoptaRex)),
+		NewCrawl("https://www.petfinder.com", "/search/?page=1&limit[]=120&status=adoptable&distance[]=Anywhere&sort[]=recently_added&shelter_id[]=CA990&include_transportable=true", petfinderHeaders, petFinder),
 	}
 
 	// invoke each crawl in its own worker ('go').
@@ -223,8 +234,8 @@ func runCrawl(w io.Writer) {
 
 	// pets by id followed by siteNames-ordered list of hit/miss
 	type AnimalInfo struct {
-		Id string
-		Links []string
+		Id            string
+		Links         []string
 		PresenceCount int
 	}
 	pets := make([]AnimalInfo, 0, len(petSites))
@@ -242,7 +253,7 @@ func runCrawl(w io.Writer) {
 	// finally, sort the results by low-to-high presence followed by id. this
 	// means the list will show the pets with the least listings first, and make
 	// it easier to find omissions since they will be grouped together.
-	sort.Slice(pets, func (l, r int) bool {
+	sort.Slice(pets, func(l, r int) bool {
 		switch {
 		case pets[l].PresenceCount < pets[r].PresenceCount:
 			return true
@@ -261,16 +272,16 @@ func runCrawl(w io.Writer) {
 	var pageTemplate = template.Must(template.New("pet-page").Parse(string(tpl)))
 
 	// generate the html
-	err = pageTemplate.Execute(w, &struct{
+	err = pageTemplate.Execute(w, &struct {
 		Generated string
-		Sites []string
-		Pets []AnimalInfo
+		Sites     []string
+		Pets      []AnimalInfo
 		PoweredBy string
-	} {
+	}{
 		Generated: generated,
-		Sites: siteNames,
-		Pets: pets,
-		PoweredBy: poweredBy(),  // defined in a separate file
+		Sites:     siteNames,
+		Pets:      pets,
+		PoweredBy: poweredBy(), // defined in a separate file
 	})
 	if err != nil {
 		panic(err)
@@ -279,9 +290,7 @@ func runCrawl(w io.Writer) {
 	// fin.
 }
 
-
 func main() {
 	rand.Seed(time.Now().UTC().UnixNano())
 	runCrawl(os.Stdout)
 }
-
