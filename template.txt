@@ -38,12 +38,11 @@
 </div>
 <p/>
 <div class='egg'>* Powered by {{.PoweredBy}}</div>
-<div class='crawls'>
-Pages I crawled to build this data:
-<ul>
+<table class='crawls'>
+<tr><th>URLs I crawled to build this data:</th></tr>
 {{- range $from := $.Crawled -}}
-<li>{{$from}}</li>
+<tr><td><a href='{{$from}}'>{{$from}}</a></td></tr>
 {{- end -}}
-</ul>
+</table>
 </body>
 </html>

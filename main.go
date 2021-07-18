@@ -217,9 +217,7 @@ func runCrawl(w io.Writer) {
 			// a slot for it.
 			siteNames = append(siteNames, site)
 		}
-		if len(crawl.Animals) > 0 {
-			resultsFrom = append(resultsFrom, crawl.Url())
-		}
+		resultsFrom = append(resultsFrom, crawl.Url())
 		// merge the pets into the master list.
 		for pet, link := range crawl.Animals {
 			if _, exists := petSites[pet]; !exists {
