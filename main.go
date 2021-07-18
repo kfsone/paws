@@ -198,6 +198,8 @@ func runCrawl(w io.Writer) {
 	petIds := make([]string, 0)
 	// per-pet list of per-site links
 	petSites := make(map[string]AnimalMap)
+	// list of the urls we got results from.
+	resultsFrom := make([]string, 0)
 
 	// go over all the result sets and build a master pet-id table,
 	// and links to each pet.
@@ -214,6 +216,9 @@ func runCrawl(w io.Writer) {
 			// first time a result was rescorded for this site, create
 			// a slot for it.
 			siteNames = append(siteNames, site)
+		}
+		if len(crawl.Animals) > 0 {
+			resultsFrom = append(resultsFrom, crawl.Url())
 		}
 		// merge the pets into the master list.
 		for pet, link := range crawl.Animals {
@@ -277,11 +282,13 @@ func runCrawl(w io.Writer) {
 		Sites     []string
 		Pets      []AnimalInfo
 		PoweredBy string
+		Crawled   []string
 	}{
 		Generated: generated,
 		Sites:     siteNames,
 		Pets:      pets,
 		PoweredBy: poweredBy(), // defined in a separate file
+		Crawled:   resultsFrom,
 	})
 	if err != nil {
 		panic(err)
